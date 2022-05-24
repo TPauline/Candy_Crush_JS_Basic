@@ -1,0 +1,42 @@
+body {
+    background-color: teal;
+    overflow: hidden;
+}
+
+.wrapper {}
+
+.grid {
+    position: relative;
+    display: grid;
+    /* left: 30%; */
+    grid-template-columns: 80px 80px 80px 80px 80px 80px 80px 80px 80px;
+    grid-template-rows: 80px 80px 80px 80px 80px 80px 80px 80px 80px;
+}
+
+.grid div {
+    position: relative;
+    border: 1px solid rgba(184, 177, 177, 0.2);
+    text-align: center;
+    /* background-repeat: no-repeat; */
+    /* position: absolute; */
+}
+
+.ims {
+    /* border: 1px solid rgba(184, 177, 177, 0.2); */
+    /* text-align: center; */
+    background-repeat: no-repeat;
+    position: absolute;
+    height: 80px;
+    width: 80px;
+}
+
+.gameArea {
+    width: 720px;
+    height: 720px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border-width: 8px;
+    padding: 20px;
+    position: absolute;
+    left: 30%;
+}
