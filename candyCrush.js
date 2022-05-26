@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'yellow': 'images/yellow-candy.png',
     }
     gridList = []
-    matches = []
     currId = 0
     imageDivs = { dragDiv: '', dropDiv: '', ghostDiv: '', tempImage: '', dataTransfer: '' }
 
@@ -39,30 +38,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 ck = document.createAttribute('color_Key')
                 color = Object.keys(fruits)[Math.floor(Math.random() * Object.keys(fruits).length)]
                 ck.value = color
-                console.log(ck)
                 div.setAttributeNode(ck);
                 div.style.backgroundImage = 'url(' + fruits[color] + ')'
                 row.push(div)
-                div.addEventListener('touchstart', dragStarted);
                 div.addEventListener('dragstart', dragStarted);
                 div.addEventListener('dragover', draggedOver);
             }
             gridList.push(row)
         }
-
     }
     createGrid()
 
     function dragStarted(e) {
-        // e.preventDefault();
-
         div = e.target || e.srcElement || e.targetTouches[0];
         imageDivs.dragDiv = div
-
         var ghostDiv = document.createElement("img");
         ghostDiv.src = fruits[div.getAttribute("color_Key")];
         var ghostHolder = document.createElement('div');
-
         ghostHolder.appendChild(ghostDiv);
         ghostHolder.style.position = "absolute";
         ghostHolder.style.top = "0px";
@@ -71,40 +63,21 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('body').appendChild(imageDivs.ghostDiv);
         imageDivs.dataTransfer = e.dataTransfer
         imageDivs.dataTransfer.setDragImage(ghostHolder, 50, 50);
-
         dragImhg = div.style.backgroundImage
-            // div.style.backgroundImage = "none"
-        matches.push(div)
-        console.log("***", imageDivs.ghostDiv)
-
-        // placeDiv(div, 0, 0)
-        console.log("&&&", div)
-            // el = div
     }
 
     function swap_images(drag, drop, div) {
         drag.style.backgroundImage = div.style.backgroundImage
-
         temp = drag.getAttribute("color_Key")
-        console.log(temp)
-
-        console.log("$$$", div.getAttribute("color_Key"))
         drag.setAttribute("color_Key", div.getAttribute("color_Key"))
         div.setAttribute("color_Key", temp)
         drop.style.backgroundImage = 'url(' + fruits[imageDivs.dropDiv.getAttribute("color_Key")] + ')'
-            //document.querySelector('body').removeChild(imageDivs.ghostDiv);
-
     }
 
     function draggedOver(e) {
         e.preventDefault();
-
         div = e.target || e.srcElement;
-        matches.push(div)
         imageDivs.dropDiv = div
-
-        console.log("dragging", "left:" + imageDivs.dragDiv.offsetLeft, "top:" + imageDivs.dragDiv.offsetTop)
-        console.log("draggedOver", "left:" + div.offsetLeft, "top:" + div.offsetTop)
 
         if (imageDivs.dragDiv.offsetLeft - div.offsetLeft == -80 && imageDivs.dragDiv.offsetTop - div.offsetTop == 0) {
             console.log("same row to RIGHT")
@@ -112,11 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (imageDivs.dragDiv.offsetLeft - div.offsetLeft == 80 && imageDivs.dragDiv.offsetTop - div.offsetTop == 0) {
             console.log("same row to LEFT")
             swap_images(imageDivs.dragDiv, imageDivs.dropDiv, div)
-
         } else if (imageDivs.dragDiv.offsetLeft - div.offsetLeft == 0 && imageDivs.dragDiv.offsetTop - div.offsetTop == 80) {
             console.log("same column to top ")
             swap_images(imageDivs.dragDiv, imageDivs.dropDiv, div)
-
         } else if (imageDivs.dragDiv.offsetLeft - div.offsetLeft == 0 && imageDivs.dragDiv.offsetTop - div.offsetTop == -80) {
             console.log("same column to bottom ")
             swap_images(imageDivs.dragDiv, imageDivs.dropDiv, div)
@@ -124,60 +95,39 @@ document.addEventListener('DOMContentLoaded', () => {
         imageDivs.dataTransfer.clearData()
     }
 
-
-
     function dragDropped(e) {
-        console.log("########")
-
         div = e.target || e.srcElement;
-
         document.querySelector('body').removeChild(imageDivs.ghostDiv);
-
-
-    }
-
-    function placeDiv(d, x_pos, y_pos) {
-        d.style.position = "absolute";
-        d.style.left = x_pos + 'px';
-        d.style.top = y_pos + 'px';
     }
 
     function checkRows() {
         for (let row = 0; row < gridList.length; row++) {
             for (let col = 0; col < gridList.length - 2; col++) {
                 if (gridList[row][col].getAttribute("color_Key") == gridList[row][col + 1].getAttribute("color_Key") && gridList[row][col + 1].getAttribute("color_Key") == gridList[row][col + 2].getAttribute("color_Key")) {
-                    console.log("ROW 3match::")
                     gridList[row][col].style.backgroundImage = 'none'
                     gridList[row][col + 1].style.backgroundImage = 'none'
                     gridList[row][col + 2].style.backgroundImage = 'none'
-
                     gridList[row][col].setAttribute("color_Key", 'none')
                     gridList[row][col + 1].setAttribute("color_Key", 'none')
                     gridList[row][col + 2].setAttribute("color_Key", 'none')
-
                 }
             }
         }
     }
 
     function checkColumns() {
-
         for (let col = 0; col < gridList.length; col++) {
             for (let row = 0; row < gridList.length - 2; row++) {
                 if (gridList[row][col].getAttribute("color_Key") == gridList[row + 1][col].getAttribute("color_Key") && gridList[row + 1][col].getAttribute("color_Key") == gridList[row + 2][col].getAttribute("color_Key")) {
-                    console.log("ROW 3match::")
                     gridList[row][col].style.backgroundImage = 'none'
                     gridList[row + 1][col].style.backgroundImage = 'none'
                     gridList[row + 2][col].style.backgroundImage = 'none'
-
                     gridList[row][col].setAttribute("color_Key", 'none')
                     gridList[row + 1][col].setAttribute("color_Key", 'none')
                     gridList[row + 2][col].setAttribute("color_Key", 'none')
-
                 }
             }
         }
-
     }
 
     function fillrows() {
@@ -189,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             console.log("temp", temp)
-
             for (let i = 0; i < ((9 - temp.length)); i++) {
                 color = Object.keys(fruits)[Math.floor(Math.random() * Object.keys(fruits).length)]
                 temp.unshift(color)
@@ -199,14 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 gridList[row][col].setAttribute("color_Key", temp[row])
                 gridList[row][col].style.backgroundImage = 'url(' + fruits[temp[row]] + ')'
             }
-
         }
     }
-    setInterval(checkRows, 500);
-    setInterval(checkColumns, 500);
-    setInterval(fillrows, 1000);
 
+    setInterval(checkRows, 100);
+    setInterval(checkColumns, 100);
+    setInterval(fillrows, 100);
     document.addEventListener("drop", dragDropped);
-
-
 })
