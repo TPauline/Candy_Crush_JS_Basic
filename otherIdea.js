@@ -43,20 +43,66 @@ document.addEventListener('DOMContentLoaded', () => {
                 div.setAttributeNode(ck);
                 div.style.backgroundImage = 'url(' + fruits[color] + ')'
                 row.push(div)
-                div.addEventListener('touchstart', dragStarted);
-                div.addEventListener('dragstart', dragStarted);
+
+                div.addEventListener('dragstart', dragStarted, false);
                 div.addEventListener('dragover', draggedOver);
+
+                // img = document.createElement('div')
+                // img.draggable = 'true'
+                // img.classList.add("ims");
+                // ck = document.createAttribute('color_Key')
+                // color = Object.keys(fruits)[Math.floor(Math.random() * Object.keys(fruits).length)]
+                // ck.value = color
+                // console.log(ck)
+                // img.setAttributeNode(ck);
+                // console.log(img.getAttribute("color_Key"))
+
+                // img.style.backgroundImage = 'url(' + fruits[color] + ')'
+                // x = (div.offsetLeft + (div.offsetWidth / 3));
+                // y = (div.offsetTop + (div.offsetWidth / 3));
+                // placeDiv(img, x, y)
+                //     // img.style.zIndex = "0";
+                // gameArea.appendChild(img);
+                // // when the user clicks down on the element
+                // // div.style.backgroundImage = fruits[Object.keys(fruits)[Math.floor(Math.random() * Object.keys(fruits).length)]]
+                // row.push(img)
             }
             gridList.push(row)
         }
 
     }
     createGrid()
+    let newPosX = 0,
+        newPosY = 0,
+        startPosX = 0,
+        startPosY = 0;
+    // gridList.forEach(r => {
+    //     r.forEach(el => {
+
+
+    //         // when the user clicks down on the element
+    //         el.addEventListener('mousedown', function(e) {
+    //             e.preventDefault();
+
+    //             // get the starting position of the cursor
+    //             startPosX = e.clientX;
+    //             startPosY = e.clientY;
+    //             elBeingDragged = el
+    //             document.addEventListener('mousemove', mouseMove);
+
+    //             document.addEventListener('mouseup', function() {
+    //                 document.removeEventListener('mousemove', mouseMove);
+    //             });
+
+    //         });
+    //     });
+    // });
+
 
     function dragStarted(e) {
         // e.preventDefault();
 
-        div = e.target || e.srcElement || e.targetTouches[0];
+        div = e.target || e.srcElement;
         imageDivs.dragDiv = div
 
         var ghostDiv = document.createElement("img");
@@ -131,6 +177,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         div = e.target || e.srcElement;
 
+        // temp = imageDivs.dragDiv.getAttribute("color_Key")
+        // console.log(temp)
+
+        // console.log("$$$", div.getAttribute("color_Key"))
+        // imageDivs.dragDiv.setAttribute("color_Key", div.getAttribute("color_Key"))
+        // div.setAttribute("color_Key", temp)
+        // imageDivs.dropDiv.style.backgroundImage = 'url(' + fruits[imageDivs.dropDiv.getAttribute("color_Key")] + ')'
+
         document.querySelector('body').removeChild(imageDivs.ghostDiv);
 
 
@@ -142,6 +196,24 @@ document.addEventListener('DOMContentLoaded', () => {
         d.style.top = y_pos + 'px';
     }
 
+
+    // function mouseMove(e) {
+    //     // calculate the new position
+    //     newPosX = startPosX - e.clientX;
+    //     newPosY = startPosY - e.clientY;
+    //     console.log()
+    //         // with each move we also want to update the start X and Y
+    //     startPosX = e.clientX;
+    //     startPosY = e.clientY;
+    //     elBeingDragged.style.zIndex = "1";
+
+    //     // set the element's new position:
+    //     console.log("@@@@", elBeingDragged.offsetTop, ":::", newPos\en-US\docs\Web\API\DataTransfer\mozItemCountY, "**", elBeingDragged.offsetTop - newPosY)
+    //     elBeingDragged.style.top = (elBeingDragged.offsetTop - newPosY) + "px";
+    //     elBeingDragged.style.left = (elBeingDragged.offsetLeft - newPosX) + "px";
+    // }
+
+
     function checkRows() {
         for (let row = 0; row < gridList.length; row++) {
             for (let col = 0; col < gridList.length - 2; col++) {
@@ -150,11 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     gridList[row][col].style.backgroundImage = 'none'
                     gridList[row][col + 1].style.backgroundImage = 'none'
                     gridList[row][col + 2].style.backgroundImage = 'none'
-
-                    gridList[row][col].setAttribute("color_Key", 'none')
-                    gridList[row][col + 1].setAttribute("color_Key", 'none')
-                    gridList[row][col + 2].setAttribute("color_Key", 'none')
-
                 }
             }
         }
@@ -162,51 +229,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function checkColumns() {
 
-        for (let col = 0; col < gridList.length; col++) {
-            for (let row = 0; row < gridList.length - 2; row++) {
-                if (gridList[row][col].getAttribute("color_Key") == gridList[row + 1][col].getAttribute("color_Key") && gridList[row + 1][col].getAttribute("color_Key") == gridList[row + 2][col].getAttribute("color_Key")) {
-                    console.log("ROW 3match::")
-                    gridList[row][col].style.backgroundImage = 'none'
-                    gridList[row + 1][col].style.backgroundImage = 'none'
-                    gridList[row + 2][col].style.backgroundImage = 'none'
 
-                    gridList[row][col].setAttribute("color_Key", 'none')
-                    gridList[row + 1][col].setAttribute("color_Key", 'none')
-                    gridList[row + 2][col].setAttribute("color_Key", 'none')
+        for (let row = 0, col = 0; row < gridList.length; row++) {
+            if (gridList[row][col].getAttribute("color_Key") == gridList[row][col + 1].getAttribute("color_Key") && gridList[row][col + 1].getAttribute("color_Key") == gridList[row][col + 2].getAttribute("color_Key")) {
+                console.log("COL 3match::")
+                gridList[row][col].style.backgroundImage = 'none'
+                gridList[row + 1][col].style.backgroundImage = 'none'
+                gridList[row + 2][col].style.backgroundImage = 'none'
 
-                }
             }
         }
-
     }
-
-    function fillrows() {
-        for (let col = 0; col < gridList.length; col++) {
-            temp = []
-            for (let row = 0; row < gridList.length; row++) {
-                if (gridList[row][col].getAttribute("color_Key") != 'none') {
-                    temp.push(gridList[row][col].getAttribute("color_Key"))
-                }
-            }
-            console.log("temp", temp)
-
-            for (let i = 0; i < ((9 - temp.length)); i++) {
-                color = Object.keys(fruits)[Math.floor(Math.random() * Object.keys(fruits).length)]
-                temp.unshift(color)
-            }
-            console.log("updated Temp", temp)
-            for (let row = 0; row < temp.length; row++) {
-                gridList[row][col].setAttribute("color_Key", temp[row])
-                gridList[row][col].style.backgroundImage = 'url(' + fruits[temp[row]] + ')'
-            }
-
-        }
-    }
-    setInterval(checkRows, 500);
-    setInterval(checkColumns, 500);
-    setInterval(fillrows, 1000);
-
+    checkRows()
+    checkColumns()
+        //  document.addEventListener('dragstart', dragStarted, false);
+        // document.addEventListener('dragover', draggedOver);
     document.addEventListener("drop", dragDropped);
+
+    // document.addEventListener('mousedown', dragStarted, false);
+    //document.addEventListener('mouseover', draggedOver);
 
 
 })
