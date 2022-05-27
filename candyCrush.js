@@ -235,8 +235,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
         checkRows();
         checkColumns();
-        // fillrows();
+        fillrows();
     }, 1000);
-    setInterval(fillrows, 1000);
+    //setInterval(fillrows, 1000);
     document.addEventListener("drop", dragDropped);
 })
