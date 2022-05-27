@@ -1,7 +1,11 @@
 body {
-    background-color: teal;
+    /* background-color: teal; */
     overflow: hidden;
     background-repeat: no-repeat;
+}
+
+#backgroundMusic {
+    border: 2px solid rgba(43, 39, 42, 0.2);
 }
 
 html {
@@ -12,34 +16,40 @@ html {
     background-size: cover;
 }
 
+audio::-webkit-media-controls-panel {
+    background-color: rgba(64, 7, 85, 0.8);
+}
+
 .grid {
     position: relative;
     display: grid;
-    grid-template-columns: 75px 75px 75px 75px 75px 75px 75px 75px 75px;
-    grid-template-rows: 75px 75px 75px 75px 75px 75px 75px 75px 75px;
+    grid-template-columns: 80px 80px 80px 80px 80px 80px 80px 80px 80px;
+    grid-template-rows: 80px 80px 80px 80px 80px 80px 80px 80px 80px;
 }
 
 .grid div {
     position: relative;
-    border: 1px solid rgba(184, 177, 177, 0.2);
+    border: 2px solid rgba(43, 39, 42, 0.2);
+    background-color: rgba(151, 153, 163, 0.288);
     text-align: center;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 .ims {
     background-repeat: no-repeat;
     position: absolute;
-    height: 75px;
-    width: 75px;
+    height: 80px;
+    width: 80px;
 }
 
 .gameArea {
-    width: 675px;
-    height: 675px;
+    width: 720px;
+    height: 720px;
     background: rgba(0, 6, 36, 0.5);
     border-radius: 10px;
     border-width: 8px;
-    padding: 20px;
+    padding: 8px;
     position: absolute;
     left: 30%;
     z-index: 1;

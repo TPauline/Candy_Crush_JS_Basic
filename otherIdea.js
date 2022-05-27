@@ -240,6 +240,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+    // function fillrows() {
+    //     for (let col = 0; col < gridList.length; col++) {
+    //         temp = []
+    //         for (let row = 0; row < gridList.length; row++) {
+    //             if (gridList[row][col].getAttribute("color_Key") != 'none') {
+    //                 temp.push(gridList[row][col].getAttribute("color_Key"))
+    //             }
+    //         }
+    //         //   console.log("temp", temp)
+    //         for (let i = 0; i < ((9 - temp.length)); i++) {
+    //             color = Object.keys(fruits)[Math.floor(Math.random() * Object.keys(fruits).length)]
+    //             temp.unshift(color)
+    //         }
+    //         //  console.log("updated Temp", temp)
+    //         for (let row = 0; row < temp.length; row++) {
+    //             gridList[row][col].setAttribute("color_Key", temp[row])
+    //             gridList[row][col].style.backgroundImage = 'url(' + fruits[temp[row]] + ')'
+    //         }
+    //     }
+    // }
     checkRows()
     checkColumns()
         //  document.addEventListener('dragstart', dragStarted, false);
