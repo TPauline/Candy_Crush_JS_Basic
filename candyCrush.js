@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         div = e.target || e.srcElement;
         varibaleHolder.dropDiv = div
-        if (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == -70 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 0) {
+        if (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == -75 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 0) {
             //console.log("same row to RIGHT")
             pos = funcPositionInGrid(varibaleHolder.dragDiv)
             swap_images(varibaleHolder.dragDiv, varibaleHolder.dropDiv, div)
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("no unswap")
                 setTimeout(function() { swap_images(varibaleHolder.dragDiv, varibaleHolder.dropDiv, div) }, 800)
             }
-        } else if (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 70 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 0) {
+        } else if (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 75 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 0) {
             // console.log("same row to LEFT")
             pos = funcPositionInGrid(varibaleHolder.dragDiv)
             swap_images(varibaleHolder.dragDiv, varibaleHolder.dropDiv, div)
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("no unswap")
                 setTimeout(function() { swap_images(varibaleHolder.dragDiv, varibaleHolder.dropDiv, div) }, 800)
             }
-        } else if (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 0 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 70) {
+        } else if (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 0 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 75) {
             //console.log("same column to top ")
             pos = funcPositionInGrid(varibaleHolder.dragDiv)
             swap_images(varibaleHolder.dragDiv, varibaleHolder.dropDiv, div)
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("no unswap")
                 setTimeout(function() { swap_images(varibaleHolder.dragDiv, varibaleHolder.dropDiv, div) }, 800)
             }
-        } else if (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 0 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == -70) {
+        } else if (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 0 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == -75) {
             //console.log("same column to bottom ")
             pos = funcPositionInGrid(varibaleHolder.dragDiv)
             swap_images(varibaleHolder.dragDiv, varibaleHolder.dropDiv, div)
