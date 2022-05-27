@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     gameArea = document.querySelector(".gameArea")
     backgroundMusic = document.querySelector("#backgroundMusic")
-    backgroundMusic.play()
+    backgroundMusic.autoplay = true;
+    backgroundMusic.loop = true;
+    backgroundMusic.load();
 
     grid = document.querySelector(".grid")
     LENGTH = 9;
