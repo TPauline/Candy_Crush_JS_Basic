@@ -3,13 +3,11 @@ body {
     overflow: hidden;
 }
 
-.wrapper {}
-
 .grid {
     position: relative;
     display: grid;
-    grid-template-columns: 80px 80px 80px 80px 80px 80px 80px 80px 80px;
-    grid-template-rows: 80px 80px 80px 80px 80px 80px 80px 80px 80px;
+    grid-template-columns: 70px 70px 70px 70px 70px 70px 70px 70px 70px;
+    grid-template-rows: 70px 70px 70px 70px 70px 70px 70px 70px 70px;
 }
 
 .grid div {
@@ -22,13 +20,13 @@ body {
 .ims {
     background-repeat: no-repeat;
     position: absolute;
-    height: 80px;
-    width: 80px;
+    height: 70px;
+    width: 70px;
 }
 
 .gameArea {
-    width: 720px;
-    height: 720px;
+    width: 630px;
+    height: 630px;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     border-width: 8px;
