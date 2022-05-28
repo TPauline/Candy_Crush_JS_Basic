@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     gameArea = document.querySelector(".gameArea")
     backgroundMusic = document.querySelector("#backgroundMusic")
+    scoreboard = document.querySelector("#scoreboard")
     backgroundMusic.autoplay = true;
     backgroundMusic.loop = true;
     backgroundMusic.load();
@@ -8,12 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
     grid = document.querySelector(".grid")
     LENGTH = 9;
     fruits = {
-        'blue': 'images/blue-candy.png',
-        'green': 'images/green-candy.png',
-        'orange': 'images/orange-candy.png',
-        'purple': 'images/purple-candy.png',
-        'red': 'images/red-candy.png',
-        'yellow': 'images/yellow-candy.png',
+        'blue': 'fuzzyImages/blue-candy.png',
+        'green': 'fuzzyImages/green-candy.png',
+        'orange': 'fuzzyImages/orange-candy.png',
+        'purple': 'fuzzyImages/purple-candy.png',
+        'red': 'fuzzyImages/red-candy.png',
+        'yellow': 'fuzzyImages/yellow-candy.png',
     }
 
     //  backgroundMusic = new Audio('sounds/CandyCrushLoop5.mp3');
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     gridList = []
     currId = 0
-    varibaleHolder = { dragDiv: '', dropDiv: '', ghostDiv: '', tempImage: '', dataTransfer: '', go: false }
+    varibaleHolder = { dragDiv: '', dropDiv: '', ghostDiv: '', dataTransfer: '', points: 0, gameStarted: false }
 
     function createGrid() {
         var ghostDiv = document.createElement("img");
@@ -78,11 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
         //check up,down, left,right
         val = false
         console.log(x + " " + y)
-        if ((x - 2 >= 0 && (varibaleHolder.dragDiv.getAttribute("color_Key") == gridList[x - 2][y].getAttribute("color_Key") && gridList[x - 1][y].getAttribute("color_Key") == gridList[x - 2][y].getAttribute("color_Key"))) || (x + 2 < gridList.length && (varibaleHolder.dragDiv.getAttribute("color_Key") == gridList[x + 2][y].getAttribute("color_Key") && gridList[x + 1][y].getAttribute("color_Key") == gridList[x + 2][y].getAttribute("color_Key"))) || (y - 2 >= 0 && (varibaleHolder.dragDiv.getAttribute("color_Key") == gridList[x][y - 2].getAttribute("color_Key") && gridList[x][y - 1].getAttribute("color_Key") == gridList[x][y - 2].getAttribute("color_Key"))) || (y + 2 < gridList.length && (varibaleHolder.dragDiv.getAttribute("color_Key") == gridList[x][y + 2].getAttribute("color_Key") && gridList[x][y + 1].getAttribute("color_Key") == gridList[x][y + 2].getAttribute("color_Key")))) {
-            val = true
-        }
-
-        if ((x - 2 >= 0 && (varibaleHolder.dropDiv.getAttribute("color_Key") == gridList[x - 2][y].getAttribute("color_Key") && gridList[x - 1][y].getAttribute("color_Key") == gridList[x - 2][y].getAttribute("color_Key"))) || (x + 2 < gridList.length && (varibaleHolder.dropDiv.getAttribute("color_Key") == gridList[x + 2][y].getAttribute("color_Key") && gridList[x + 1][y].getAttribute("color_Key") == gridList[x + 2][y].getAttribute("color_Key"))) || (y - 2 >= 0 && (varibaleHolder.dropDiv.getAttribute("color_Key") == gridList[x][y - 2].getAttribute("color_Key") && gridList[x][y - 1].getAttribute("color_Key") == gridList[x][y - 2].getAttribute("color_Key"))) || (y + 2 < gridList.length && (varibaleHolder.dropDiv.getAttribute("color_Key") == gridList[x][y + 2].getAttribute("color_Key") && gridList[x][y + 1].getAttribute("color_Key") == gridList[x][y + 2].getAttribute("color_Key")))) {
+        if ((x - 2 >= 0 && (gridList[x][y].getAttribute("color_Key") == gridList[x - 2][y].getAttribute("color_Key") && gridList[x - 1][y].getAttribute("color_Key") == gridList[x - 2][y].getAttribute("color_Key"))) ||
+            (x + 2 < LENGTH && (gridList[x][y].getAttribute("color_Key") == gridList[x + 2][y].getAttribute("color_Key") && gridList[x + 1][y].getAttribute("color_Key") == gridList[x + 2][y].getAttribute("color_Key"))) ||
+            (y - 2 >= 0 && (gridList[x][y].getAttribute("color_Key") == gridList[x][y - 2].getAttribute("color_Key") && gridList[x][y - 1].getAttribute("color_Key") == gridList[x][y - 2].getAttribute("color_Key"))) ||
+            (y + 2 < LENGTH && (gridList[x][y].getAttribute("color_Key") == gridList[x][y + 2].getAttribute("color_Key") && gridList[x][y + 1].getAttribute("color_Key") == gridList[x][y + 2].getAttribute("color_Key"))) ||
+            ((x - 1 >= 0 && x + 1 < LENGTH) && (gridList[x - 1][y].getAttribute("color_Key") == gridList[x][y].getAttribute("color_Key") && gridList[x + 1][y].getAttribute("color_Key") == gridList[x][y].getAttribute("color_Key"))) ||
+            ((y - 1 >= 0 && y + 1 < LENGTH) && (gridList[x][y - 1].getAttribute("color_Key") == gridList[x][y].getAttribute("color_Key") && gridList[x][y + 1].getAttribute("color_Key") == gridList[x][y].getAttribute("color_Key")))
+        ) {
             val = true
         }
         return val
@@ -100,46 +103,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function dragStarted(e) {
+        varibaleHolder.gameStarted = true
         div = e.target || e.srcElement || e.targetTouches[0];
         varibaleHolder.dragDiv = div
             // varibaleHolder.ghostDiv.style.backgroundImage = 'url(' + fruits[div.getAttribute("color_Key")] + ')'
         varibaleHolder.ghostDiv.lastChild.src = fruits[div.getAttribute("color_Key")];
         varibaleHolder.dataTransfer = e.dataTransfer
         varibaleHolder.dataTransfer.setDragImage(varibaleHolder.ghostDiv, 50, 50);
+        //  div.style.backgroundImage = "none"
     }
 
-    function swap_images(drag, drop, div) {
+    function swap_images(drag, drop) {
         // drag.style.backgroundImage = div.style.backgroundImage
         temp = drag.getAttribute("color_Key")
-        drag.setAttribute("color_Key", div.getAttribute("color_Key"))
-        div.setAttribute("color_Key", temp)
-        temp = drag.style.backgroundImage
-        drag.style.backgroundImage = drop.style.backgroundImage
-        drop.style.backgroundImage = temp
+        drag.setAttribute("color_Key", drop.getAttribute("color_Key"))
+        drop.setAttribute("color_Key", temp)
+        drag.style.backgroundImage = 'url(' + fruits[drag.getAttribute("color_Key")] + ')'
+        drop.style.backgroundImage = 'url(' + fruits[drop.getAttribute("color_Key")] + ')'
     }
 
     function draggedOver(e) {
         e.preventDefault();
         div = e.target || e.srcElement;
-        varibaleHolder.dropDiv = div
-        if ((varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == -80 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 0) || (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 80 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 0) || (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 0 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 80) || (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 0 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == -80)) {
-            //console.log("same row to RIGHT")
-            pos = funcPositionInGrid(varibaleHolder.dragDiv)
-            swap_images(varibaleHolder.dragDiv, varibaleHolder.dropDiv, div)
-            if (!validSwap(pos[0], pos[1])) {
-                console.log("no unswap")
-                setTimeout(function() { swap_images(varibaleHolder.dragDiv, varibaleHolder.dropDiv, div) }, 500)
-                negativeSwitch.play()
-            } else {
-                positiveswitch.play()
-
-            }
-        }
     }
 
     function dragDropped(e) {
         div = e.target || e.srcElement;
-        // document.querySelector('body').removeChild(varibaleHolder.ghostDiv);
+        varibaleHolder.dropDiv = div
+        if ((varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == -80 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 0) || (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 80 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 0) || (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 0 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == 80) || (varibaleHolder.dragDiv.offsetLeft - div.offsetLeft == 0 && varibaleHolder.dragDiv.offsetTop - div.offsetTop == -80)) {
+            //console.log("same row to RIGHT")
+            posDrag = funcPositionInGrid(varibaleHolder.dragDiv)
+            posDrop = funcPositionInGrid(varibaleHolder.dropDiv)
+            swap_images(varibaleHolder.dragDiv, varibaleHolder.dropDiv)
+            if (!validSwap(posDrag[0], posDrag[1]) && !validSwap(posDrop[0], posDrop[1])) {
+                console.log("no unswap")
+                setTimeout(function() { swap_images(varibaleHolder.dragDiv, varibaleHolder.dropDiv, div) }, 500)
+                negativeSwitch.play()
+            }
+        }
     }
 
     function checkRows() {
@@ -152,6 +153,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     gridList[row][col].setAttribute("color_Key", 'none')
                     gridList[row][col + 1].setAttribute("color_Key", 'none')
                     gridList[row][col + 2].setAttribute("color_Key", 'none')
+                    if (varibaleHolder.gameStarted) {
+                        varibaleHolder.points += (3 * 40)
+                        scoreboard.innerHTML = varibaleHolder.points;
+                    }
                 }
             }
         }
@@ -167,6 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     gridList[row][col].setAttribute("color_Key", 'none')
                     gridList[row + 1][col].setAttribute("color_Key", 'none')
                     gridList[row + 2][col].setAttribute("color_Key", 'none')
+                    if (varibaleHolder.gameStarted) {
+                        varibaleHolder.points += (3 * 40)
+                        scoreboard.innerHTML = varibaleHolder.points;
+                    }
+
                 }
             }
         }
@@ -194,10 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    setInterval(checkRows, 1000);
-    setInterval(checkColumns, 1000);
-    setInterval(fillrows, 1000);
-
-
+    setInterval(checkRows, 100);
+    setInterval(checkColumns, 100);
+    setInterval(fillrows, 500);
     document.addEventListener("drop", dragDropped);
 })

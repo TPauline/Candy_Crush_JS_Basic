@@ -5,11 +5,11 @@ body {
 }
 
 #backgroundMusic {
-    border: 2px solid rgba(43, 39, 42, 0.2);
+    border: 2px solid rgba(43, 39, 42, 0.8);
 }
 
 html {
-    background: url(images/Final-Background.png) no-repeat center center fixed;
+    background: url(images/n7Mtdb.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -17,7 +17,7 @@ html {
 }
 
 audio::-webkit-media-controls-panel {
-    background-color: rgba(64, 7, 85, 0.8);
+    background-color: rgba(64, 7, 85, 0.5);
 }
 
 .grid {
@@ -29,8 +29,8 @@ audio::-webkit-media-controls-panel {
 
 .grid div {
     position: relative;
-    border: 2px solid rgba(43, 39, 42, 0.2);
-    background-color: rgba(151, 153, 163, 0.288);
+    border: 2px solid rgba(24, 2, 18, 0.8);
+    background-color: rgba(111, 76, 116, 0.5);
     text-align: center;
     background-repeat: no-repeat;
     background-position: center;
@@ -53,4 +53,21 @@ audio::-webkit-media-controls-panel {
     position: absolute;
     left: 30%;
     z-index: 1;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(176, 10, 201, 0.5) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+#scoreboard,
+#pointsLabel {
+    max-width: 300px;
+    background-color: rgba(61, 4, 68, 0.8);
+    position: absolute;
+    font-family: '60s Scoreboard', sans-serif;
+    font-size: 50px;
+    text-shadow: 5px 5px #f305eb;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(176, 10, 201, 0.5) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    color: azure;
+    word-wrap: break-word;
+    margin: 20px;
+    text-align: center;
+    align-items: center;
 }
